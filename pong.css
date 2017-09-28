@@ -1,0 +1,50 @@
+html, body, div, canvas {
+	margin:0;
+	padding:0;
+} /* to remove the top and left whitespace */
+
+html, body {
+	width:100%;
+	height:100%;
+} /* just to be sure these are full screen*/
+
+canvas {
+	display:block;
+	position:fixed;
+	left:0;
+	top:0;
+	width: 100%;
+	height: 100%;
+}
+
+#countdown {
+	position: absolute;
+	display: inline-block;
+	white-space: nowrap;
+	top: 20%;
+  left: 50%;
+  transform: translate(-50%);
+}
+
+#score {
+	position: fixed;
+	width: 100%;
+	padding-top: 50px;
+}
+
+#scoreLeft {
+	float:left;
+	padding-left: 50px;
+}
+
+#scoreRight {
+	float: right;
+	padding-right: 50px;
+}
+
+.nt {
+	color: lightblue;
+	font-size: 80px;
+	font-family: sans-serif;
+	z-index: 1000;
+}
