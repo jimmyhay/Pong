@@ -3,8 +3,8 @@ function Puck(parent) {
 
   var xVal = $(document).width()/2;
   var yVal = $(document).height()/2;
-  var xVel = 5;
-  var yVel = 5;
+  var xVel = 10;
+  var yVel = 10;
 
   var point = new paper.Point(xVal, yVal);
 	var size = Math.ceil(Math.random() * 50);
@@ -24,11 +24,19 @@ function Puck(parent) {
   }
 
   this.reset = function() {
-    xVel = 5;
-    yVel = 5;
+    xVel = 10;
+    yVel = 10;
     path.position.x = xVal;
     path.position.y = yVal;
 
+    dist = $(document).width()-path.position.x;
+
+    aiDest = Math.tan(45*(Math.PI/180)) * dist;
+    aiDest = path.position.y+aiDest;
+
+    debugAi.position = new paper.Point($(document).width(), aiDest);
+
+    window.moveAiPaddle(aiDest);
   }
 
   var checkBounds = function () {
@@ -44,7 +52,20 @@ function Puck(parent) {
     } else if (path.position.x < 0-path.bounds.width) {
       window.updateScore(false);
     }
-    if (path.position.y > $(document).height()-path.bounds.height/2 || path.position.y < 0+path.bounds.height/2) yVel *= -1;
+    if (path.position.y > $(document).height()-path.bounds.height/2 || path.position.y < 0+path.bounds.height/2) {
+      yVel *= -1;
+
+      bounds = Math.atan2(yVel, xVel);
+
+      dist = $(document).width()-path.position.x;
+
+      aiDest = Math.tan(bounds) * dist;
+      aiDest = path.position.y+aiDest;
+
+      debugAi.position = new paper.Point($(document).width(), aiDest);
+
+      window.moveAiPaddle(aiDest);
+    }
   }
 
   this.checkPaddleRight = function(paddle) {
@@ -86,11 +107,11 @@ function Puck(parent) {
           dist = $(document).width()-path.position.x;
 
           aiDest = Math.tan(bounds*(Math.PI/180)) * dist;
-          console.log(dist);
-          aiDest = path.position.y-aiDest;
+          aiDest = path.position.y+aiDest;
 
           debugAi.position = new paper.Point($(document).width(), aiDest);
-          console.log(aiDest);
+
+          window.moveAiPaddle(aiDest);
         }
       }
     }

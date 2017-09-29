@@ -1,6 +1,5 @@
 $(document).ready(function() {
 	var spacePressed = false;
-	var countdown;
 	var gameStarted = false;
 	var canvas = document.getElementById('myCanvas');
   context = canvas.getContext('2d');
@@ -21,14 +20,16 @@ $(document).ready(function() {
 	var rightPaddle = new Paddle(false);
 
 	var keysPressed = [];
+	var countdown;
+	var aiCount;
 
 	paper.view.onFrame = function (event) {
 		if (gameStarted) {
 			leftPaddle.updatePaddle(keysPressed);
-			rightPaddle.updatePaddle(keysPressed);
+			rightPaddle.updatePaddleAi(keysPressed);
 			puck.updatePuck();
 			puck.checkPaddleLeft(leftPaddle);
-			puck.checkPaddleRight(rightPaddle, );
+			puck.checkPaddleRight(rightPaddle);
 		}
 	}
 
@@ -47,6 +48,12 @@ $(document).ready(function() {
 	window.onkeydown = function(e) {
 	  keysPressed[e.keyCode] = true;
 	}
+
+	window.moveAiPaddle = function(val) {
+		setTimeout(rightPaddle.moveAi, 1000, val);
+	}
+
+	puck.reset();
 
 	var changeCountdownValue = function() {
 		if (document.getElementById("countdown").innerHTML-1>0) {
